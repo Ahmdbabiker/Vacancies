@@ -1,0 +1,77 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Alexandria", sans-serif;
+    font-weight: 350;
+    font-style: normal;  }
+
+  #cv-template{
+    display: none;
+  }
+  .tit {
+    padding: 20px 0;
+    text-align: center;
+  }
+  .tit h1{
+    font-size: 35px;
+    text-align: center;
+    color: rgb(199, 199, 199);
+  }
+  .myimg{
+    border: 2px solid black;
+    width: 200px;
+    border-radius: 50%;
+  }
+  .background{
+    background-color: lightcoral;
+    z-index: 1000;
+  }
+  .header{
+    color: white;
+    align-items: center;
+  }
+  .footer{
+    background-color: rgb(32, 34, 36); 
+  }
+  .bt{
+    border: none;
+    background-color: rgb(139, 139, 139); 
+  }
+  .icon{
+    padding: 2px 4px 2px 4px;
+  }
+  .text{
+    color: #b9b9b9;
+    padding-bottom: 5px;
+  }
+  .bottom{
+    text-align: center;
+  }
+
+  .container .cv .weInputs{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .container .cv .weInputs .weFeild1{
+    width: 100%;
+  }
+    .container .cv .weInputs .mc2{
+      width: 48%;
+      margin: 4px;
+    }
+    .container .cv .weInputs .cv22{
+      width: 90%;
+      margin: 0 8px;
+      align-items: center;
+    }
+    .container .cv .mv{
+      width: 0;
+      align-items: center;
+    }
+    .container .cv .del{
+      margin: 10px;
+      font-size: 13px;
+      border-radius: 10px;
+    }

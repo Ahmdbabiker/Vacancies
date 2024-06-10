@@ -1,0 +1,287 @@
+
+<!DOCTYPE html>
+{% load static %}
+{% load social_share %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وظــيفة | {{vacancy.title}} </title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&display=swap" rel="stylesheet">
+
+
+    <style>
+        *{
+          background-color: transparent;
+        }
+      </style>
+
+</head>
+<body dir="rtl" style="background-color:#F9F9FB ;">
+
+    
+    <!--navbar section-->
+
+    <header id="nav-menu" aria-label="navigation bar">
+        <div class="container">
+          <div class="nav-start">
+            <a class="logo" href="/">
+                <h1 style="color: rgb(90, 90, 90);">وظـــيفة | Wazzifa</h1>
+            </a>
+            <nav class="menu">
+              <ul class="menu-bar">
+                <li>
+                  <button class="nav-link dropdown-btn" data-dropdown="dropdown1" aria-haspopup="true" aria-expanded="false" aria-label="browse">
+                    الرئيـسية
+                    <i class="bx bx-chevron-down" aria-hidden="true"></i>
+                  </button>
+    
+                </li>
+                <li><a class="nav-link" href="{% url 'services' %}"> خدمـات</a></li>
+                <li><a class="nav-link" href="#">إيميلات</a></li>
+                <li><a class="nav-link" href="{% url 'contactus' %}">تواصل معـنا</a></li>
+
+              </ul>
+            </nav>
+          </div>
+      
+          <div class="nav-end">
+            <button id="hamburger" aria-label="hamburger" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-bars"></i>
+            </button>
+          </div>
+        </div>
+      </header>
+
+       <!--navbar section-->
+
+
+
+
+
+
+
+       <!--job_details_section-->
+
+        <div class="details_section">
+            <div class="details_container">
+                <div class="taking_two-sides">
+                    <div class="job-infos">
+
+                        <div class="job-tit">
+                            <h2>{{vacancy.title}}</h2>
+                            <p class="tadg"> {{vacancy.tag}}</p>
+                            <div class="locationn" style="display: flex;margin:8px 0;">
+                                <div class="iconnn">
+                                <i class="fa-solid fa-location-dot"></i>
+                                </div>
+                                <div class="locationn-title">
+                                    <p class="loc">{{vacancy.get_location_display}} </p>
+                                </div>
+                            </div>
+                            <p class="sidee"> نوع العمل  :  {{vacancy.get_contracttype_display}} </p>
+                            <p class="sidee">  الجهة : {{vacancy.get_jobtype_display}} </p>
+                           
+                            <p class="ppp" style="margin: 20px 0;">     
+                                {{vacancy.desc}}
+                            </p>
+                            <p class="apl">للتقديـم علـى الوظيـفة : </p>
+                            <p class="play">{{vacancy.applying}}</p>
+                            <div class="date-postedd" style="display: flex;margin: 10px 0;align-content: center;">
+                                <div class="date-icon">
+                                    <i class="fa-regular fa-clock"></i>
+                                </div>
+                                <div class="date-textt">
+                                    <small>{{vacancy.date_posted|timesince}}</small>
+                                </div>
+                            </div>
+
+                           <small> {% post_to_whatsapp vacancy.id "مشـاركةالوظـيفة" %}</small>                       
+                         </div>
+
+                       
+
+                        <div class="comments">
+                            <h3 style="margin: 10px 0;">التعليقات ({{count_comments.count}})</h3>
+                            <div class="commenters">
+
+
+                            {% if comment_save%}
+                            {% for comment in comment_save %}
+                            <div class="write">
+                                <span style="background-color: rgb(227, 227, 227);padding: 5px 10px;border-radius: 50%;"><i class="fa-regular fa-user"></i></span>
+                                <span style="color: #979797;"> {{comment.name}} - {{comment.location}}</span><br>
+                                <small style="color: #979797;">تاريخ إجراء المقابلة : {{comment.date}}</small>
+                                <p style="margin: 15px 0;color: rgb(39, 39, 39);">      
+                                    {{comment.comment}}
+                                </p>
+                                <hr style="border: 0.5px solid rgb(231, 231, 231);">
+                            </div>
+                                {% endfor %}
+                                {% else %}
+                                <small>لا تعليقات حتى الآن</small>
+                                {% endif %}
+                                
+                           
+                           
+                            </div>
+                        </div>
+
+
+
+                        <div class="inter-ques">
+                            <h2>هل قمت بإجراء المقابلة على هذه الوظيفة ؟ أخبرنا كيف جـرت المقابلة</h2>
+                            <div class="ques-forms" >
+                                <form style="margin-top: 15px;" method="POST">
+                                   {% csrf_token %}
+                                    <input type="text" placeholder="الإسـم" name="name" style="border: 1px solid rgb(233, 233, 233);
+                                    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);border-radius: 8px;background-color: white;">
+                                    <input type="text" placeholder="المنطقة" name="location" style="border: 1px solid rgb(233, 233, 233);
+                                    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);border-radius: 8px;background-color: white;">
+                                    <label>تاريخ اجراء المقابلة</label>
+                                    <input type="date" name="date" style="border: 1px solid rgb(233, 233, 233);
+                                    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);border-radius: 8px;background-color: white;">
+                                    <textarea type="text"  class="tex" name="comment" placeholder="إكتب تعليقك هنا .."></textarea>  
+                                    <br>
+                                    <input type="submit" class="bus" value="تعلـيق">
+                                </form>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+
+
+
+                   
+
+
+
+                    
+
+                    <div class="simi-jobs">
+                       <h2>وظائف مشابهة : <span style="color:gray ;">'{{vacancy.tag}}'</span></h2>
+                        {% for vac in vacancy_tag %}
+                        <div class="joob" style="background-color: white;box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);border-radius: 8px;">
+                            <h2> <a href="{% url 'job_detail' vac.slug %}"> {{vac.title}}</a></h2>
+                            <p  class="py"> {{vac.tag}}</p>
+                            <div class="llocation" style="display: flex;color: #999;">
+                                <div class="icconn">
+                                <i class="fa-solid fa-location-dot"></i>
+                                </div>
+                                <div class="loocation-title">
+                                    <p>{{vac.get_location_display}}</p>
+                                </div>
+                            </div>
+                            <p class="pyp" style="margin: 9px 0;">
+                                {{vac.desc|truncatewords:10}}
+                            </p>
+                            <div class="datea-posted" style="display: flex;">
+                                <div class="datea-ico" style="color: #999;">
+                                    <i class="fa-regular fa-clock"></i>
+                                </div>
+                                <div class="datea-text">
+                                    <small style="color: #999;">{{vac.date_posted | timesince}}</small>
+                                </div>
+
+                            </div>
+                        </div>
+                        {% endfor %}
+
+
+
+                    
+
+
+                        <div class="cv-creator">
+                            <div class="cv-holder">
+                                <h3> هل تريد خدمه لتنفيذها أو لتطلبها ؟  </h3>
+                                <p> إنتقل إلى صفحة الخدمـات وقم بتصفحهـا         </p><br>
+                                <div class="bttn">
+                                <a href="#"> خدمـات </a>
+                                </div>    
+                        </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+       <!--job_details_section-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--footer -->
+
+        <!--footer start-->
+        <div class="footer">
+            <!--<div class="container">-->
+                <div class="taking-footer">
+                   
+                    <div class="taking-links">
+                        <a href="{% url 'policy' %}">سياسة الخصوصية</a>
+                        <a href="{% url 'contactus' %}">تواصل معنـا </a>
+                        <a href="{% url 'terms' %}">الشروط والأحكام </a>
+                        <a href="#">عننـا ؟ </a>
+                        <a href="{% url 'home' %}"> الرئيـسية</a>
+                    </div>
+                    <div class="log">
+                      <h1>وظـــيفة | Wazzifa</h1>
+                      <small>All Rights Reserved 2024<i class="fa-regular fa-copyright"></i></small>
+                      <br><small>Developed by Ahmd Babiker</small>
+                  </div>
+                </div>
+          
+        </div>
+    <!--footer end-->
+    <!--footer -->
+
+      
+
+
+  
+
+
+
+
+    <!--js -->
+   <script src="{% static 'js/script.js' %}"></script>
+    <!-- js-->
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+ة 
